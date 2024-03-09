@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: email-service
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: ${EMAIL_USERNAME:gridbooking4you@gmail.com}
+    password: ${EMAIL_PASSWORD:acud msoy hwxy gyrk}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+
+email:
+  file-path:
+    registration: email-service/src/main/resources/templates/registration_email.htmls
+
+templates:
+  name:
+    verification: verification_email.html
+    registration: registration_email.html
+    forgot-password: forgot_password_email.html
+
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    email:
+      registration: email.registration.queue
+      verification: email.verification.queue
+      forgot-password: email.forgot-password.queue
+  routing-keys:
+    internal-email-registration: internal.email.registration.routing-key
+    internal-email-verification: internal.email.verification.routing-key
+    internal-email-forgot-password: internal.email.forgot-password.routing-key

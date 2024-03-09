@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.somika'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(
+            'org.springframework.boot:spring-boot-starter-mail',
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.slf4j:slf4j-api:latest.release',
+            'org.springframework.boot:spring-boot-starter-amqp',
+            'org.springframework.boot:spring-boot-starter-thymeleaf'
+    )
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation(
+            'org.springframework.boot:spring-boot-starter-test',
+            'org.testcontainers:rabbitmq:1.19.6',
+            'org.testcontainers:testcontainers:1.17.6',
+            'org.testcontainers:junit-jupiter:1.17.6'
+    )
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

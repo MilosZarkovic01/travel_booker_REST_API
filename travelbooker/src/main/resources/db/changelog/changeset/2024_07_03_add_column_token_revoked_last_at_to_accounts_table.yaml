@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_column_token_revoked_last_at_to_accounts_table
+      author: Milos Zarkovic
+      changes:
+        - addColumn:
+            tableName: accounts
+            columns:
+              - column:
+                  name: token_revoked_last_at
+                  type: date
+                  defaultValue: null
