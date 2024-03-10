@@ -2,6 +2,7 @@ package com.somika.travelbooker.repository.entity;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Table(name = "reservations")
 public class ReservationEntity {
 
@@ -36,4 +38,15 @@ public class ReservationEntity {
     @JoinColumn(name = "travel_plan_id")
     private TravelPlanEntity travelPlan;
 
+    @Override
+    public String toString() {
+        return "ReservationEntity{" +
+                "reservationId=" + reservationId +
+                ", dateOfReservation=" + dateOfReservation +
+                ", totalCost=" + totalCost +
+                ", account=" + account +
+                ", accommodation=" + accommodation +
+                ", travelPlan=" + travelPlan +
+                '}';
+    }
 }

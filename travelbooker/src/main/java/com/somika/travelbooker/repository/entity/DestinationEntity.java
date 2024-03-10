@@ -23,9 +23,20 @@ public class DestinationEntity {
     private String city;
     private String country;
 
-    @OneToMany(mappedBy = "destination", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "destination")
     private List<AccommodationEntity> accommodations;
 
-    @OneToMany(mappedBy = "destination", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "destination")
     private List<TravelPlanEntity> travelPlans;
+
+    @Override
+    public String toString() {
+        return "DestinationEntity{" +
+                "destinationId=" + destinationId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

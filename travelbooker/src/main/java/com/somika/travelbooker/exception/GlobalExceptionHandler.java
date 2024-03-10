@@ -119,4 +119,14 @@ public class GlobalExceptionHandler {
                 .details(request.getDescription(false))
                 .build();
     }
+
+    @ExceptionHandler(NoSeatsAvailableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public final ErrorDetails handleNoSeatsAvailableException(NoSeatsAvailableException ex, WebRequest request) {
+        return ErrorDetails.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .details(request.getDescription(false))
+                .build();
+    }
 }

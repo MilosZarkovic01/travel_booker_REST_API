@@ -29,6 +29,18 @@ public class TravelPlanEntity {
     @JoinColumn(name = "destination_id")
     private DestinationEntity destination;
 
-    @OneToMany(mappedBy = "travelPlan", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "travelPlan")
     private List<ReservationEntity> reservations;
+
+    @Override
+    public String toString() {
+        return "TravelPlanEntity{" +
+                "travelPlanId=" + travelPlanId +
+                ", arrivalDate=" + arrivalDate +
+                ", departureDate=" + departureDate +
+                ", price=" + price +
+                ", numberOfSeats=" + numberOfSeats +
+                ", destination=" + destination +
+                '}';
+    }
 }

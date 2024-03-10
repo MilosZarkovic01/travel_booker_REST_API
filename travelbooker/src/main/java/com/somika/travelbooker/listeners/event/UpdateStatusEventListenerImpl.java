@@ -21,20 +21,20 @@ public class UpdateStatusEventListenerImpl implements PostUpdateEventListener {
 
     @Override
     public void onPostUpdate(PostUpdateEvent postUpdateEvent) {
-        AccountEntity account = (AccountEntity) postUpdateEvent.getEntity();
+        if (postUpdateEvent.getEntity() instanceof AccountEntity account) {
+            int activeColumnIndex = postUpdateEvent.getPersister().getPropertyIndex("active");
 
-        int activeColumnIndex = postUpdateEvent.getPersister().getPropertyIndex("active");
+            if (activeColumnIndex != -1) {
+                Object currentState = postUpdateEvent.getState()[activeColumnIndex];
+                Object previousState = postUpdateEvent.getOldState()[activeColumnIndex];
 
-        if (activeColumnIndex != -1) {
-            Object currentState = postUpdateEvent.getState()[activeColumnIndex];
-            Object previousState = postUpdateEvent.getOldState()[activeColumnIndex];
-
-            if (!currentState.equals(previousState)) {
-                producer.publish(
-                        new RegistrationEmailRequestDto(account.getEmail()),
-                        rabbitMQConfig.getExchange(),
-                        rabbitMQConfig.getRegistrationRoutingKey());
-                log.info("Registration email is sent");
+                if (!currentState.equals(previousState)) {
+                    producer.publish(
+                            new RegistrationEmailRequestDto(account.getEmail()),
+                            rabbitMQConfig.getExchange(),
+                            rabbitMQConfig.getRegistrationRoutingKey());
+                    log.info("Registration email is sent");
+                }
             }
         }
     }
