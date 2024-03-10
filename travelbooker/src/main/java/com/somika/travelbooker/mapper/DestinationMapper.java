@@ -1,8 +1,6 @@
 package com.somika.travelbooker.mapper;
 
-import com.somika.travelbooker.dto.AccommodationDto;
 import com.somika.travelbooker.dto.DestinationDto;
-import com.somika.travelbooker.repository.entity.AccommodationEntity;
 import com.somika.travelbooker.repository.entity.DestinationEntity;
 import org.mapstruct.Mapper;
 

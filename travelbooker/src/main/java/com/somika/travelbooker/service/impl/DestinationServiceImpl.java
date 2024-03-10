@@ -37,7 +37,7 @@ public class DestinationServiceImpl implements DestinationService {
                 .orElseThrow(() -> new DestinationNotFoundException(
                         String.format("Destination with id %s not found", destinationId)
                 ));
-        
+
         return destinationMapper.entityToDto(destination);
     }
 }
