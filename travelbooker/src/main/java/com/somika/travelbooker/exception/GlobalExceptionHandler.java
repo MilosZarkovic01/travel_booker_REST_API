@@ -99,4 +99,24 @@ public class GlobalExceptionHandler {
                 .details(request.getDescription(false))
                 .build();
     }
+
+    @ExceptionHandler(SearchCriteriaException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public final ErrorDetails handleSearchCriteriaException(SearchCriteriaException ex, WebRequest request) {
+        return ErrorDetails.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .details(request.getDescription(false))
+                .build();
+    }
+
+    @ExceptionHandler(DestinationNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public final ErrorDetails handleDestinationNotFoundException(DestinationNotFoundException ex, WebRequest request) {
+        return ErrorDetails.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .details(request.getDescription(false))
+                .build();
+    }
 }
