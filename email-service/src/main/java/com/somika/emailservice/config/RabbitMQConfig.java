@@ -33,6 +33,9 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.queues.email.forgot-password}")
     private String emailForgotPasswordQueue;
 
+    @Value("${rabbitmq.queues.email.reservation}")
+    private String emailReservationQueue;
+
     @Value("${rabbitmq.routing-keys.internal-email-registration}")
     private String internalEmailRegistrationRoutingKey;
 
@@ -41,6 +44,9 @@ public class RabbitMQConfig {
 
     @Value("${rabbitmq.routing-keys.internal-email-forgot-password}")
     private String internalEmailForgotPasswordRoutingKey;
+
+    @Value("${rabbitmq.routing-keys.internal-email-reservation}")
+    private String internalEmailReservationRoutingKey;
 
     @Bean
     public TopicExchange internalTopicExchange() {
@@ -63,6 +69,10 @@ public class RabbitMQConfig {
         return new Queue(emailForgotPasswordQueue);
     }
 
+    @Bean
+    public Queue emailReservationQueue() {
+        return new Queue(emailReservationQueue);
+    }
 
     @Bean
     public Binding internalToEmailRegistrationBinding() {
@@ -86,6 +96,14 @@ public class RabbitMQConfig {
                 .bind(emailForgotPasswordQueue())
                 .to(internalTopicExchange())
                 .with(internalEmailForgotPasswordRoutingKey);
+    }
+
+    @Bean
+    public Binding internalToEmailReservationBinding() {
+        return BindingBuilder
+                .bind(emailReservationQueue())
+                .to(internalTopicExchange())
+                .with(internalEmailReservationRoutingKey);
     }
 
     @Bean

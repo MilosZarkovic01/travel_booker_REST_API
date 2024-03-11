@@ -46,6 +46,7 @@ rabbitmq:
     internal-email-registration: internal.email.registration.routing-key
     internal-email-verification: internal.email.verification.routing-key
     internal-email-forgot-password: internal.email.forgot-password.routing-key
+    internal-email-reservation: internal.email.reservation.routing-key
   path:
     email-verification: http://localhost:8080/accounts/verify-email/
 

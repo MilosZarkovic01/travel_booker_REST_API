@@ -30,6 +30,9 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.routing-keys.internal-email-forgot-password}")
     private String forgotPasswordRoutingKey;
 
+    @Value("${rabbitmq.routing-keys.internal-email-reservation}")
+    private String reservationRoutingKey;
+
     @Value("${rabbitmq.path.email-verification}")
     private String verificationEmailPath;
 

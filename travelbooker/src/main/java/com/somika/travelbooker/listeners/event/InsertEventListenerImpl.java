@@ -1,11 +1,13 @@
 package com.somika.travelbooker.listeners.event;
 
 import com.somika.travelbooker.config.RabbitMQConfig;
+import com.somika.travelbooker.dto.request.ReservationEmailRequestDto;
 import com.somika.travelbooker.dto.request.VerificationEmailRequestDto;
 import com.somika.travelbooker.dto.response.ForgotPasswordResponseDto;
 import com.somika.travelbooker.rabbitmq.RabbitMQMessageProducer;
 import com.somika.travelbooker.repository.entity.AccountEntity;
 import com.somika.travelbooker.repository.entity.PasswordResetTokenEntity;
+import com.somika.travelbooker.repository.entity.ReservationEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.event.spi.PostInsertEvent;
@@ -38,6 +40,18 @@ public class InsertEventListenerImpl implements PostInsertEventListener {
                     rabbitMQConfig.getForgotPasswordRoutingKey()
             );
             log.info("Forgot password email is sent");
+        } else if (postInsertEvent.getEntity() instanceof ReservationEntity reservationEntity) {
+            producer.publish(
+                    new ReservationEmailRequestDto(
+                            reservationEntity.getAccount().getEmail(),
+                            reservationEntity.getTravelPlan().getArrivalDate(),
+                            reservationEntity.getTravelPlan().getDepartureDate(),
+                            reservationEntity.getAccommodation().getDestination().getCountry() + " " + reservationEntity.getAccommodation().getDestination().getCity(),
+                            reservationEntity.getTotalCost()
+                    ),
+                    rabbitMQConfig.getExchange(),
+                    rabbitMQConfig.getReservationRoutingKey()
+            );
         }
     }
 

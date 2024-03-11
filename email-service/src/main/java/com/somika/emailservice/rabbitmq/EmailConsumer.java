@@ -2,6 +2,7 @@ package com.somika.emailservice.rabbitmq;
 
 import com.somika.emailservice.dto.request.ForgotPasswordRequestDto;
 import com.somika.emailservice.dto.request.RegistrationEmailRequestDto;
+import com.somika.emailservice.dto.request.ReservationEmailRequestDto;
 import com.somika.emailservice.dto.request.VerificationEmailRequestDto;
 import com.somika.emailservice.service.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,12 @@ public class EmailConsumer {
     public void forgotPasswordConsumer(ForgotPasswordRequestDto forgotPasswordRequest) {
         log.info("Consumed {} from queue", forgotPasswordRequest);
         emailService.sendForgotPasswordEmail(forgotPasswordRequest);
+    }
+
+    @RabbitListener(queues = "${rabbitmq.queues.email.reservation}")
+    public void reservationConsumer(ReservationEmailRequestDto reservationEmailRequest) {
+        log.info("Consumed {} from queue", reservationEmailRequest);
+        emailService.sendReservationEmail(reservationEmailRequest);
     }
 
 }

@@ -2,6 +2,7 @@ package com.somika.emailservice.service.impl;
 
 import com.somika.emailservice.dto.request.ForgotPasswordRequestDto;
 import com.somika.emailservice.dto.request.RegistrationEmailRequestDto;
+import com.somika.emailservice.dto.request.ReservationEmailRequestDto;
 import com.somika.emailservice.dto.request.VerificationEmailRequestDto;
 import com.somika.emailservice.service.EmailService;
 import jakarta.mail.MessagingException;
@@ -36,6 +37,9 @@ public class EmailServiceImpl implements EmailService {
 
     @Value("${templates.name.forgot-password}")
     private String forgotPasswordTemplateName;
+
+    @Value("${templates.name.reservation}")
+    private String reservationTemplateName;
 
     @Override
     public void sendRegistrationEmail(RegistrationEmailRequestDto registrationEmailRequest) {
@@ -99,6 +103,32 @@ public class EmailServiceImpl implements EmailService {
 
             javaMailSender.send(mimeMessage);
             log.info("Forgot password email is sent to {}", forgotPasswordRequest.email());
+        } catch (MessagingException ex) {
+            log.error("Failed to send email", ex);
+            throw new IllegalArgumentException("Failed to send email");
+        }
+    }
+
+    @Override
+    public void sendReservationEmail(ReservationEmailRequestDto reservationEmailRequest) {
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            Context context = new Context();
+            context.setVariable("from", reservationEmailRequest.from());
+            context.setVariable("to", reservationEmailRequest.to());
+            context.setVariable("destination", reservationEmailRequest.destination());
+            context.setVariable("totalAmount", reservationEmailRequest.totalAmount());
+
+            String htmlContent = templateEngine.process(reservationTemplateName, context);
+
+            helper.setText(htmlContent, true);
+            helper.setTo(reservationEmailRequest.email());
+            helper.setSubject("Confirmation");
+
+            javaMailSender.send(mimeMessage);
+            log.info("Reservation email is sent to {}", reservationEmailRequest.email());
         } catch (MessagingException ex) {
             log.error("Failed to send email", ex);
             throw new IllegalArgumentException("Failed to send email");

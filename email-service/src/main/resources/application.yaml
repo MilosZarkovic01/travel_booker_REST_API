@@ -25,6 +25,7 @@ templates:
     verification: verification_email.html
     registration: registration_email.html
     forgot-password: forgot_password_email.html
+    reservation: reservation_email.html
 
 
 rabbitmq:
@@ -35,7 +36,9 @@ rabbitmq:
       registration: email.registration.queue
       verification: email.verification.queue
       forgot-password: email.forgot-password.queue
+      reservation: email.reservation.queue
   routing-keys:
     internal-email-registration: internal.email.registration.routing-key
     internal-email-verification: internal.email.verification.routing-key
     internal-email-forgot-password: internal.email.forgot-password.routing-key
+    internal-email-reservation: internal.email.reservation.routing-key

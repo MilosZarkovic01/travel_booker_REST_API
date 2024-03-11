@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Your Password</title>
+    <title>Confirmation of Your Reservation</title>
     <style>
         body {
             font-family: 'Helvetica', Arial, sans-serif;
@@ -11,16 +11,20 @@
             padding: 0;
             background-color: #f8f9fa;
         }
+
         .container {
             max-width: 1700px;
             margin: 50px auto;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
+
         h1 {
             color: #333;
         }
+
         p {
             font-size: 16px;
             color: #666;
@@ -28,6 +32,7 @@
             margin-bottom: 20px;
             text-align: left;
         }
+
         .signature {
             margin-top: 50px;
             text-align: left;
@@ -36,11 +41,15 @@
 </head>
 <body>
 <div class="container">
-    <h1>Reset Your Password</h1>
-    <p>You have requested to reset your password for TravelBooking. Please use the following code to reset your
-        password:</p>
-    <p><strong>Reset Code: <span th:text="${resetCode}"></span></strong></p>
-    <p>If you did not request a password reset, please ignore this email.</p>
+    <h1>Confirmation of Your Reservation</h1>
+    <p>Dear User,</p>
+    <p>This email is to confirm your reservation made with TravelBooking.</p>
+    <p>Please find below the details of your reservation:</p>
+    <p><strong>From:</strong> <span th:text="${from}"></span></p>
+    <p><strong>To:</strong> <span th:text="${to}"></span></p>
+    <p><strong>Destination:</strong> <span th:text="${destination}"></span></p>
+    <p><strong>Total Amount:</strong> <span th:text="${totalAmount}"></span></p>
+    <p>If you have any questions or need further assistance, feel free to contact us.</p>
     <div class="signature">
         <p>Best regards,</p>
         <p>TravelBooking Team</p>
